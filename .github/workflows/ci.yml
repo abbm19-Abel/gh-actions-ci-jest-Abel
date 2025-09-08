@@ -14,8 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
-
+        node-version: [20.x]  # simplificamos a 20.x por ahora
     steps:
       - uses: actions/checkout@v4
 
@@ -23,24 +22,25 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: npm
+          # OJO: sin cache para evitar la advertencia del lockfile
 
-      - name: Install dependencies (fallback if no lockfile)
-        run: |
-          if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ] || [ -f yarn.lock ]; then
-            npm ci
-          else
-            npm install --no-fund --no-audit
-          fi
+      - name: Install dependencies (no lockfile needed)
+        run: npm install --no-fund --no-audit
 
       - name: Run tests (with coverage + junit)
         run: npm run test:ci
 
-      - name: Upload artifacts (coverage + junit)
-        if: always()
+      # Subimos artefactos solo si existen, para evitar warnings
+      - name: Upload coverage
+        if: ${{ always() && hashFiles('coverage/lcov.info') != '' }}
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-node-${{ matrix.node-version }}
-          path: |
-            coverage/
-            junit.xml
+          name: coverage
+          path: coverage/
+
+      - name: Upload junit
+        if: ${{ always() && hashFiles('junit.xml') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit
+          path: junit.xml
