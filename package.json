@@ -1,18 +1,23 @@
-"scripts": {
-  "test": "jest --coverage",
-  "test:ci": "jest --coverage --reporters=default --reporters=jest-junit"
-},
-"devDependencies": {
-  "jest": "^29.7.0",
-  "jest-junit": "^16.0.0"
-},
-"jest": {
-  "testEnvironment": "node",
-  "collectCoverageFrom": ["src/**/*.js"],
-  "coverageDirectory": "coverage",
-  "coverageReporters": ["text", "lcov"]
-},
-"jest-junit": {
-  "outputDirectory": ".",
-  "outputName": "junit.xml"
+{
+  "name": "gh-actions-ci-jest-Abel",
+  "version": "1.0.0",
+  "description": "Proyecto para el curso de GitHub Actions CI con Jest",
+  "scripts": {
+    "test": "jest --coverage",
+    "test:ci": "jest --coverage --reporters=default --reporters=jest-junit"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-junit": "^16.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": ["src/**/*.js"],
+    "coverageDirectory": "coverage",
+    "coverageReporters": ["text", "lcov"]
+  },
+  "jest-junit": {
+    "outputDirectory": ".",
+    "outputName": "junit.xml"
+  }
 }
