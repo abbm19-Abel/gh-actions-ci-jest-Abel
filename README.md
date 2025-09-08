@@ -14,3 +14,4 @@ Repositorio mínimo para completar el curso “Crear flujos de trabajo de integr
 npm ci
 npm test
 npm run test:ci
+✅ Workflow actualizado para protección de rama.
